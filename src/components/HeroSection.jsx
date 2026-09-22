@@ -97,7 +97,7 @@ export default function HeroSection({ onGoToEditions }) {
                                 <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                             </a>
                             <button
-                                onClick={onGoToEditions}
+                                onClick={() => onGoToEditions && onGoToEditions('edicion-1')}
                                 className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-heading font-semibold text-sm shadow-sm transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer"
                             >
                                 <BookOpen className="w-4 h-4 text-slate-500" />

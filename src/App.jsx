@@ -14,6 +14,7 @@ function App() {
   };
 
   const [activeSection, setActiveSection] = useState(getInitialSection);
+  const [targetEditionId, setTargetEditionId] = useState('edicion-1');
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -28,8 +29,11 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const handleNavigate = (sectionId) => {
+  const handleNavigate = (sectionId, editionId = null) => {
     setActiveSection(sectionId);
+    if (editionId) {
+      setTargetEditionId(editionId);
+    }
     if (sectionId === 'inicio') {
       window.history.pushState(null, '', '#inicio');
     } else if (sectionId === 'ediciones') {
@@ -44,12 +48,12 @@ function App() {
       <main>
         {activeSection === 'inicio' && (
           <>
-            <HeroSection onGoToEditions={() => handleNavigate('ediciones')} />
+            <HeroSection onGoToEditions={(editionId) => handleNavigate('ediciones', editionId || 'edicion-1')} />
             <ArticleGrid />
           </>
         )}
         {activeSection === 'ediciones' && (
-          <EditionsSection />
+          <EditionsSection key={targetEditionId} initialEditionId={targetEditionId} />
         )}
       </main>
       <Footer />

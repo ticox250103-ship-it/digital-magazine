@@ -1,14 +1,16 @@
+import { homeArticles } from './homeArticles';
+
 export const EDITIONS = [
     {
         id: "edicion-1",
         number: 1,
         title: "1era Edición",
-        fullTitle: "1era Edición · Período Académico 2026-01",
-        period: "2026-01",
+        fullTitle: "1era Edición · Período Académico 2026-02",
+        period: "2026-02",
         subtitle: "Pasantías I en la Oficina de Farmacia",
         faculty: "Facultad de Farmacia — Universidad Santa María, Sede La Florencia",
         description: "Artículos científicos realizados por los estudiantes del 8vo Semestre como requisito obligatorio de sus pasantías en la oficina de farmacia. Investigaciones académicas basadas en experiencias prácticas de campo.",
-        publishDate: "Febrero 2026",
+        publishDate: "Período 2026-02",
         articlesCount: 15,
         articles: [
             {
@@ -162,12 +164,21 @@ export const EDITIONS = [
                 pdfFile: "ediciones/edicion-1/15.pdf"
             }
         ]
+    },
+    {
+        id: "edicion-2",
+        number: 2,
+        title: "2da Edición",
+        fullTitle: "2da Edición · Período Académico 2027-01",
+        period: "2027-01",
+        subtitle: "Pasantías I en la Oficina de Farmacia",
+        faculty: "Facultad de Farmacia — Universidad Santa María, Sede La Florencia",
+        description: "Artículos científicos e investigaciones académicas de la 2da Edición realizados por los estudiantes del 8vo Semestre en la Unidad Curricular Pasantías I en la Oficina de Farmacia para el período académico 2027-01.",
+        publishDate: "Período 2027-01",
+        articlesCount: homeArticles.length,
+        articles: homeArticles.map(art => ({
+            ...art,
+            pdfFile: `ediciones/edicion-2/${art.id}.pdf`
+        }))
     }
-    // Futuras ediciones pueden agregarse aquí fácilmente:
-    // {
-    //    id: "edicion-2",
-    //    number: 2,
-    //    title: "2da Edición",
-    //    ...
-    // }
 ];

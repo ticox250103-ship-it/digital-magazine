@@ -5,8 +5,8 @@ import PdfModal from './PdfModal';
 import { EDITIONS } from '../data/editions';
 import { cn } from '../utils/cn';
 
-export default function EditionsSection() {
-    const [selectedEditionId, setSelectedEditionId] = useState(EDITIONS[0]?.id || 'edicion-1');
+export default function EditionsSection({ initialEditionId }) {
+    const [selectedEditionId, setSelectedEditionId] = useState(initialEditionId || EDITIONS[0]?.id || 'edicion-1');
     const [selectedCategory, setSelectedCategory] = useState('Todas');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedArticle, setSelectedArticle] = useState(null);
@@ -96,7 +96,7 @@ export default function EditionsSection() {
 
                     {/* Placeholder for future edition */}
                     <div className="flex items-center gap-2 px-5 py-3 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-400 dark:text-slate-500 text-xs font-medium bg-slate-50/50 dark:bg-slate-900/30">
-                        <span>+ 2da Edición (Próximamente)</span>
+                        <span>+ 3era Edición (Próximamente)</span>
                     </div>
                 </div>
 
