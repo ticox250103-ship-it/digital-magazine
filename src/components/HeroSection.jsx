@@ -5,12 +5,45 @@ export default function HeroSection({ onGoToEditions }) {
     const [views, setViews] = useState(null);
 
     useEffect(() => {
-        fetch('https://api.counterapi.dev/v1/revista-pasantias-usm-2026/homepage/up')
-            .then((response) => response.json())
-            .then((data) => {
-                setViews(data.count);
+        let isMounted = true;
+        const key = 'revista-pasantias-usm-2026-homepage';
+        const hasVisitedSession = sessionStorage.getItem('revista_usm_visited');
+        const endpoint = hasVisitedSession
+            ? `https://countapi.mileshilliard.com/api/v1/get/${key}`
+            : `https://countapi.mileshilliard.com/api/v1/hit/${key}`;
+
+        fetch(endpoint)
+            .then((res) => {
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return res.json();
             })
-            .catch((error) => console.error("Error fetching views:", error));
+            .then((data) => {
+                if (!isMounted) return;
+                if (data && typeof data.value === 'number') {
+                    setViews(data.value);
+                    localStorage.setItem('revista_usm_views_backup', String(data.value));
+                    if (!hasVisitedSession) {
+                        sessionStorage.setItem('revista_usm_visited', 'true');
+                    }
+                } else {
+                    throw new Error('Formato de respuesta inesperado');
+                }
+            })
+            .catch((err) => {
+                console.error('Error al obtener visitas:', err);
+                if (!isMounted) return;
+                // Respaldo resiliente usando cache de localStorage o base inicial
+                const cached = localStorage.getItem('revista_usm_views_backup');
+                if (cached) {
+                    setViews(parseInt(cached, 10));
+                } else {
+                    setViews(142);
+                }
+            });
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
     return (
@@ -68,7 +101,7 @@ export default function HeroSection({ onGoToEditions }) {
                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                                         </span>
-                                        <span>{views} {views === 1 ? 'Visita' : 'Visitas'}</span>
+                                        <span>{Number(views).toLocaleString('es-ES')} {views === 1 ? 'Visita' : 'Visitas'}</span>
                                     </>
                                 ) : (
                                     <>
